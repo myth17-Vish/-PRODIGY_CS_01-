@@ -1,0 +1,63 @@
+def caesar_cipher(text, shift, mode='encrypt'):
+    """
+    Encrypts or decrypts the given text using the Caesar Cipher algorithm.
+    
+    Args:
+    - text (str): The input text to be encrypted or decrypted.
+    - shift (int): The number of positions to shift each character.
+    - mode (str): Specifies whether to 'encrypt' or 'decrypt' the text. Default is 'encrypt'.
+    
+    Returns:
+    - str: The encrypted or decrypted text.
+    """
+    encrypted_text = ""
+    for char in text:
+        if char.isalpha():  # Check if the character is a letter
+            # Determine the alphabet (uppercase or lowercase)
+            if char.islower():
+                start = ord('a')
+            else:
+                start = ord('A')
+            
+            # Shift the character within the alphabet range
+            shifted = (ord(char) - start + shift) % 26 + start
+            
+            # Convert shifted value back to a character and append to result
+            encrypted_text += chr(shifted)
+        else:
+            # If the character is not a letter, append it unchanged
+            encrypted_text += char
+    
+    return encrypted_text
+
+
+# Function to get user input and perform encryption or decryption
+def main():
+    while True:
+        choice = input("Do you want to encrypt or decrypt? Enter 'encrypt' or 'decrypt' (or 'exit' to quit): ").strip().lower()
+        
+        if choice == 'exit':
+            break
+        
+        if choice not in ['encrypt', 'decrypt']:
+            print("Invalid choice. Please enter 'encrypt' or 'decrypt'.")
+            continue
+        
+        text = input("Enter your message: ").strip()
+        try:
+            shift = int(input("Enter the shift value (a positive integer): ").strip())
+            if shift < 0:
+                raise ValueError
+        except ValueError:
+            print("Invalid shift value. Please enter a positive integer.")
+            continue
+        
+        if choice == 'encrypt':
+            encrypted_message = caesar_cipher(text, shift, 'encrypt')
+            print(f"Encrypted message: {encrypted_message}")
+        elif choice == 'decrypt':
+            decrypted_message = caesar_cipher(text, shift, 'decrypt')
+            print(f"Decrypted message: {decrypted_message}")
+
+if __name__ == "__main__":
+    main()
