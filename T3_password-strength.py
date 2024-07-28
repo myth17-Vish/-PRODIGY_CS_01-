@@ -60,7 +60,7 @@ def main():
             print("Password strength:", strength)
 
         elif choice == "2":
-            print("Goodbye!")
+            print("Have a Nice try!")
             break
 
         else:
